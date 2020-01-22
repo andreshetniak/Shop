@@ -11,15 +11,26 @@ using Shop.Data.Interfaces;
 using Shop.Data.Mocks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Shop.Data;
+using Microsoft.EntityFrameworkCore;
+using Shop.Data.Repository;
 
 namespace Shop
 {
     public class Startup
     {
+        private IConfigurationRoot configurationString;
+
+        public Startup(IWebHostEnvironment hostEnv)
+        {
+            configurationString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("dbSettings.json").Build();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAllCars, MockCars>();
-            services.AddTransient<ICarsCategory, MockCategory>();
+            services.AddDbContext<AppDBContent>(options => options.UseSqlServer(configurationString.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IAllCars, CarRepository>();
+            services.AddTransient<ICarsCategory, CategoryRepository>();
             services.AddMvc();
         }
 
@@ -51,6 +62,14 @@ namespace Shop
                     name: "default",
                     pattern: "{controller=Cars}/{action=List}/{id?}");
             });
+
+            AppDBContent content;
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                content = scope.ServiceProvider.GetRequiredService<AppDBContent>();
+                DBObjects.Initial(content);
+            }
+            
         }
     }
 }
