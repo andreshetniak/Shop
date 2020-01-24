@@ -20,10 +20,7 @@ namespace Shop.Controllers
 
         public ViewResult Index()
         {
-            var homeCars = new HomeViewModel
-            {
-                FavoriteCars = this.carRepository.GetFavCars
-            };
+            var homeCars = new HomeViewModel { FavoriteCars = this.carRepository.GetFavCars };
             return View(homeCars);
         }
     }

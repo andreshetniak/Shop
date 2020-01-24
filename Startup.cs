@@ -18,6 +18,19 @@ using Shop.Data.Models;
 
 namespace Shop
 {
+
+    /// <summary>
+    /// TODO: Ќастроить валидацию формы оплаты
+    ///     ѕодумать над добавлением возможности авторизации
+    ///     —делать приличный внешний вид а именно сделать нормальный футер и отредактировать хедер
+    ///     –асширить саму базу данных и ассортиент автомобилий
+    ///     ƒобавить возможность удалени€ машин из корзины
+    ///     ѕодумать еще над логикой реализации проекта 
+    ///     {
+    ///         ќценить в целом проект
+    ///         проча€ фигн€ короче
+    ///     }
+    /// </summary>
     public class Startup
     {
         private IConfigurationRoot configurationString;
@@ -29,14 +42,17 @@ namespace Shop
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<AppDBContent>(options => options.UseSqlServer(configurationString.GetConnectionString("DefaultConnection")));
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
+            services.AddTransient<IAllOrders, OrdersRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShopCart.GetCart(sp));
 
-            services.AddMvc();
+            services.AddMvc().AddMvcOptions(s => s.EnableEndpointRouting = false);
+
             services.AddMemoryCache();
             services.AddSession();
         }
@@ -63,13 +79,24 @@ namespace Shop
             app.UseRouting();
             app.UseAuthorization();
 
-            // устанавливаем адреса, которые будут обрабатыватьс€
-            app.UseEndpoints(endponts =>
+            app.UseMvc(routes =>
             {
-                endponts.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Cars}/{action=List}/{id?}");
+                routes.MapRoute(
+                    name: "default", 
+                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "categoryFilter", 
+                    template: "Car/{action}/{category?}", 
+                    defaults: new { controller = "Car", action = "List" });
             });
+
+            // устанавливаем адреса, которые будут обрабатыватьс€
+            //app.UseEndpoints(endponts =>
+            //{
+            //    endponts.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Cars}/{action=List}/{id?}");
+            //});
 
             AppDBContent content;
             using (var scope = app.ApplicationServices.CreateScope())
