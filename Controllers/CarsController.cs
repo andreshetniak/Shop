@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Interfaces;
+using Shop.Data.Models;
+using Shop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Shop.ViewModels;
-using Shop.Data.Mocks;
-using Shop.Data.Models;
 
 namespace Shop.Controllers
 {
@@ -25,7 +23,7 @@ namespace Shop.Controllers
         [Route("Cars/List/{category}")]
         public ViewResult List(string category)
         {
-            string _category = category;
+            //string _category = category;
             IEnumerable<Car> cars = null;
             string currentCategory = "";
             if (string.IsNullOrEmpty(category))

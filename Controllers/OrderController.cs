@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Interfaces;
 using Shop.Data.Models;
 
@@ -22,6 +17,31 @@ namespace Shop.Controllers
 
         public IActionResult CheckOut()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CheckOut(Order order)
+        {
+            shopCart.ListShopItems = shopCart.GetShopItems();
+
+            if (shopCart.ListShopItems.Count == 0)
+            {
+                ModelState.AddModelError("","Корзина пуста");
+            }
+
+            if (ModelState.IsValid)
+            {
+                allOrders.CreateOrder(order);
+                return RedirectToAction("Complete");
+            }
+
+            return View(order);
+        }
+
+        public IActionResult Complete()
+        {
+            ViewBag.Message = "Заказ добавлен в обработку";
             return View();
         }
     }

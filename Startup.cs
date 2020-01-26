@@ -1,39 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shop.Data.Interfaces;
-using Shop.Data.Mocks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Shop.Data;
-using Microsoft.EntityFrameworkCore;
-using Shop.Data.Repository;
+using Shop.Data.Interfaces;
 using Shop.Data.Models;
+using Shop.Data.Repository;
 
 namespace Shop
 {
-
-    /// <summary>
-    /// TODO: Настроить валидацию формы оплаты
-    ///     Подумать над добавлением возможности авторизации
-    ///     Сделать приличный внешний вид а именно сделать нормальный футер и отредактировать хедер
-    ///     Расширить саму базу данных и ассортиент автомобилий
-    ///     Добавить возможность удаления машин из корзины
-    ///     Подумать еще над логикой реализации проекта 
-    ///     {
-    ///         Оценить в целом проект
-    ///         прочая фигня короче
-    ///     }
-    /// </summary>
     public class Startup
     {
-        private IConfigurationRoot configurationString;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IConfigurationRoot configurationString;
 
         public Startup(IWebHostEnvironment hostEnv)
         {

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shop.Data
 {
+    /// <summary>
+    /// Служит для работы с БД
+    /// </summary>
     public class AppDBContent : DbContext
     {
         public AppDBContent(DbContextOptions<AppDBContent> options) : base(options)

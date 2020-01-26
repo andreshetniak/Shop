@@ -1,9 +1,6 @@
 ﻿using Shop.Data.Interfaces;
 using Shop.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shop.Data.Repository
 {
@@ -29,6 +26,8 @@ namespace Shop.Data.Repository
             {
                 var orderDitail = new OrderDetail()
                 {
+                    Order = order,
+                    Car = item.Car,
                     CarId = item.Id,
                     OrderId = order.Id,
                     Price = item.Car.Price
