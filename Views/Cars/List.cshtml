@@ -1,9 +1,22 @@
 ﻿<h2>All cars</h2>
-<div class="row mt-5 mb-2">
-    @{
-        foreach (Car car in Model.GetAllCars)
-        {
-            @Html.Partial("AllCars", car )
+@*<div class="row mt-5 mb-2">
+        @{
+            foreach (Car car in Model.GetAllCars)
+            {
+                @Html.Partial("AllCars", car )
+            }
         }
-    }
+    </div>*@
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @{
+                foreach (Car car in Model.GetAllCars)
+                {
+                    @Html.Partial("AllCars", car)
+                }
+            }
+        </div>
+    </div>
 </div>

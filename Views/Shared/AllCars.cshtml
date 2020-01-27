@@ -1,10 +1,26 @@
 ﻿
 @model Shop.Data.Models.Car
-
-    <div class="col-lg-4">
+@*<div class="col-lg-4">
         <img class="img-thumbnail" src="@Model.Img" alt="@Model.Name" />
         <h2>@Model.Name</h2>
         <p>@Model.ShortDescription</p>
         <p>Price: @Model.Price.ToString("c")</p>
         <p><a class="btn btn-warning" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.Id">Add to cart</a></p>
+    </div>*@
+
+<div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+        <img class="card-img-top" src="@Model.Img" alt="@Model.Name"/> 
+        <div class="card-body">
+            <h4>@Model.Name</h4>
+            <p class="card-text">@Model.ShortDescription</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <a class="btn btn-sm btn-outline-secondary" asp-controller="ShopCart" asp-action="AddToCart" asp-route-id="@Model.Id">Add to cart</a>
+                </div>
+                <small class="text-muted">@Model.Price.ToString("c")</small>
+            </div>
+        </div>
     </div>
+</div>
